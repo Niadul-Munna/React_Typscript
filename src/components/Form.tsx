@@ -1,34 +1,39 @@
-import { FormEvent, useRef } from "react";
-
+import { FieldValues, useForm } from "react-hook-form";
 const Form = () => {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const ageRef = useRef<HTMLInputElement>(null);
-  const person = { name: "", age: 0 };
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    if (nameRef.current !== null) person.name = nameRef.current.value;
-    if (ageRef.current !== null) person.age = parseInt(ageRef.current.value);
-    console.log(person);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
   };
+
   return (
     <div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="  bg-green-200 space-y-2 p-4  grid  text-lg"
       >
         <label className="" htmlFor="text">
-          Name
+          User Name
         </label>
-        <input ref={nameRef} id="text" type="text" className="  rounded-lg" />
-        <label className="" htmlFor="age">
-          Age
+        <input
+          {...register("name")}
+          id="text"
+          type="text"
+          className="  rounded-lg"
+        />
+        <label className="" htmlFor="password">
+          Password
         </label>
-        <input ref={ageRef} id="age" type="number" className="  rounded-lg" />
+        <input
+          {...register("password")}
+          id="password"
+          type="password"
+          className="  rounded-lg"
+        />
         <button
           type="submit"
           className="border bg-blue-500 py-1 px-3 rounded-lg text-white"
         >
-          Submit
+          Login
         </button>
       </form>
     </div>
